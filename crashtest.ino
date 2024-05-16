@@ -233,24 +233,31 @@ void SalleDeJeux() {
 }
 
 void validerTplay() {
-    unsigned long tempsDebutAppui = millis();
+    // Attendre que le bouton gauche soit relâché
     while (digitalRead(PIN_BOUTON_GAUCHE) == LOW) {
-        // Attendre que le bouton soit relâché ou que le temps limite soit atteint
-        if (millis() - tempsDebutAppui >= 5000) {
-            // Si le bouton est maintenu enfoncé pendant au moins 5 secondes,
-            // valider l'icône Tplay et afficher la salle de jeux
-            salleDeJeuxAffiche = true;
-            SalleDeJeux(); // Afficher la salle de jeux
-            while (digitalRead(PIN_BOUTON_GAUCHE) == LOW) {
-                // Attendez que le bouton soit relâché avant de continuer
-            }
-            // Une fois que le bouton est relâché, revenez au menu principal
-            salleDeJeuxAffiche = false;
-            afficherMenuPrincipal();
-            return;
-        }
+        // Attendre que le bouton soit relâché avant de continuer
     }
+
+    // Attendre que le bouton gauche soit pressé pour afficher la salle de jeux
+    while (digitalRead(PIN_BOUTON_GAUCHE) == HIGH) {
+        // Attendre que le bouton soit à nouveau pressé avant de continuer
+    }
+
+    // Afficher la salle de jeux lorsque le bouton gauche est pressé
+    salleDeJeuxAffiche = true;
+    SalleDeJeux(); // Afficher la salle de jeux
+
+    // Attendre que le bouton droit soit pressé pour revenir au menu principal
+    while (digitalRead(PIN_BOUTON_DROITE) == HIGH) {
+        // Attendre que le bouton soit à nouveau pressé avant de continuer
+    }
+
+    // Lorsque le bouton droit est pressé, revenir au menu principal
+    salleDeJeuxAffiche = false;
+    afficherMenuPrincipal();
 }
+
+
 
 void setup() {
     pinMode(PIN_BOUTON_MILIEU, INPUT_PULLUP);
@@ -287,6 +294,9 @@ void loop() {
             CosmoBienvenue();
         }
 
-      
+        // Si le bouton gauche est appuyé et que la sélection du menu est sur Tplay
+        if (digitalRead(PIN_BOUTON_GAUCHE) == LOW && selectionMenu == 0) {
+            validerTplay(); // Afficher la salle de jeux si Tplay est sélectionné
+        }
     }
 }
