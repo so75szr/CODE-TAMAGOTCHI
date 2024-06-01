@@ -1181,17 +1181,35 @@ void afficherMenuManger() {
     display.setTextSize(1);
     display.setTextColor(WHITE);
 
-    // Affichage de la sélection actuelle
-    display.setCursor(100, 2);
-    display.print("100 HC");
+    // Affichage du nb de pv
+    display.setCursor(1, 2);
+    display.print("NB PV");
+    display.setCursor(92, 2);
+    display.println("100 HC");
 
-    switch (selectionAliment) {
+
+    switch (SelectionAliments) {
         case 0:
-            display.drawBitmap(106, 48, Apple, 24, 24, WHITE);
-            display.setTextSize(2);
-            display.setCursor(49, 34);
+            display.drawBitmap(80, 25, Apple, 24, 24, WHITE);
+            display.setTextSize(1);
+            display.setCursor(20, 25);
             display.println("Pomme");
+            display.setCursor(20, 35);
+            display.println("+5 PV");
+            display.setCursor(20, 45);
+            display.println("5 HC");
             break;
+        case 1: 
+            display.drawBitmap(80, 25, Steak, 24, 24, WHITE);
+            display.setTextSize(1);
+            display.setCursor(20, 25);
+            display.println("Steak");
+            display.setCursor(20, 35);
+            display.println("+10 PV");
+            display.setCursor(20, 45);
+            display.println("10 HC");
+            break;
+
         // Ajoutez ici les autres aliments
     }
 
